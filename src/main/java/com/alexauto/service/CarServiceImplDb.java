@@ -13,7 +13,7 @@ import com.alexauto.model.Car;
 public class CarServiceImplDb implements CarService {
 
     @Override
-    public List<Car> getAllCars() {
+    public List<Car> getCars() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllCars'");
     }
@@ -46,6 +46,12 @@ public class CarServiceImplDb implements CarService {
     public boolean deleteCar(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteCar'");
+    }
+
+    @Override
+    public List<Car> getCarsByType(String type) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCarsByType'");
     }
 
 }

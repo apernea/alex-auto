@@ -1,17 +1,34 @@
 package com.alexauto.service;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 import com.alexauto.model.Car;
+import com.alexauto.utils.CarDataLoader;
 
 @Service
+@Profile("json")
 public class CarServiceImpl implements CarService {
+
+    private static final AtomicLong idCounter = new AtomicLong();
+
+    public CarServiceImpl() {
+        List<Car> cars = CarDataLoader.getCars();
+        if (!cars.isEmpty()) {
+            long maxId = cars.stream()
+                .mapToLong(Car::getId)
+                .max()
+                .orElse(0L);
+            idCounter.set(maxId);
+        }
+    }
+
     @Override
-    public List<Car> getAllCars() {
-        // Implementation logic to retrieve all cars
-        return List.of(); // Placeholder return
+    public List<Car> getCars() {
+        return CarDataLoader.getCars(); // Placeholder return
     }
 
     @Override
@@ -42,6 +59,12 @@ public class CarServiceImpl implements CarService {
     public List<Car> getAllCarTypes() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllCarTypes'");
+    }
+
+    @Override
+    public List<Car> getCarsByType(String type) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCarsByType'");
     }
 
 }

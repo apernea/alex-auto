@@ -32,9 +32,15 @@ public class CarController {
 
     @GetMapping("/car/all")
     public ResponseEntity<List<Car>> getAllCars() {
-        List<Car> allCars = carService.getAllCars();
+        List<Car> allCars = carService.getCars();
 
         return ResponseEntity.ok(allCars);
+    }
+
+    @GetMapping("/car/types")
+    public ResponseEntity<List<Car>> getAllCarTypes() {
+        List<Car> allCarTypes = carService.getAllCarTypes();
+        return ResponseEntity.ok(allCarTypes);
     }
 
     @PostMapping("/car/add")
