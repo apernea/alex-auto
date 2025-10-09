@@ -1,7 +1,9 @@
 package com.alexauto.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
@@ -9,8 +11,9 @@ import lombok.Data;
 @Data
 public class Car {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
-    private Long product_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     private String make;
     private String model;

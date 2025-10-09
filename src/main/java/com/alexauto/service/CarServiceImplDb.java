@@ -1,6 +1,7 @@
 package com.alexauto.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -10,33 +11,41 @@ import com.alexauto.model.Car;
 @Service
 @Profile("db")
 public class CarServiceImplDb implements CarService {
+
     @Override
     public List<Car> getAllCars() {
-        // Implementation logic to retrieve all cars from the database
-        return List.of(); // Placeholder return
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllCars'");
     }
 
     @Override
-    public Car getCarById(Long id) {
+    public List<Car> getAllCarTypes() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllCarTypes'");
+    }
+
+    @Override
+    public Optional<Car> getCarById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCarById'");
     }
 
     @Override
-    public Car createCar(Car car) {
+    public Car addCar(Car car) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createCar'");
+        throw new UnsupportedOperationException("Unimplemented method 'addCar'");
     }
 
     @Override
-    public Car updateCar(Long id, Car car) {
+    public boolean updateCar(Car car) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateCar'");
     }
 
     @Override
-    public void deleteCar(Long id) {
+    public boolean deleteCar(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteCar'");
     }
+
 }

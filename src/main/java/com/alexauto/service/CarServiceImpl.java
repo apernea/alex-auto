@@ -2,6 +2,8 @@ package com.alexauto.service;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.alexauto.model.Car;
 
 @Service
@@ -13,26 +15,33 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car getCarById(Long id) {
+    public Optional<Car> getCarById(Long id) {
         // Implementation logic to retrieve a car by its ID
-        return new Car(); // Placeholder return
+        return Optional.of(new Car()); // Placeholder return
     }
 
     @Override
-    public Car createCar(Car car) {
+    public Car addCar(Car car) {
         // Implementation logic to create a new car
         return car; // Placeholder return
     }
 
     @Override
-    public Car updateCar(Long id, Car car) {
+    public boolean updateCar(Car car) {
         // Implementation logic to update an existing car
-        return car; // Placeholder return   
+        return true; // Placeholder return
     }
 
     @Override
-    public void deleteCar(Long id) {
+    public boolean deleteCar(Long id) {
         // Implementation logic to delete a car by its ID
+        return false; // Placeholder return
+    }
+
+    @Override
+    public List<Car> getAllCarTypes() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllCarTypes'");
     }
 
 }
