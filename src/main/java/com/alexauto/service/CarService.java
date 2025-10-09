@@ -12,5 +12,14 @@ public interface CarService {
     Car addCar(Car car);
     boolean updateCar(Car car);
     boolean deleteCar(Long id);
-    List<Car> getCarsByType(String type);
+
+    /*
+     * List<Expense> getExpensesByDate(String date);
+    List<Expense> getExpensesByCategoryAndMonth(String category, String month);
+    List<String> getAllExpenseCategories();
+    Optional<Expense> getExpenseById(Long id);
+    Expense addExpense(Expense expense);
+    boolean updateExpense(Expense expense);
+    boolean deleteExpenseById(Long id);
+     */
 }
