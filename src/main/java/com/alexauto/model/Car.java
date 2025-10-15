@@ -22,4 +22,5 @@ public class Car {
     private double price;
     private String description;
     private String image_url;
+    private String type;
 }
