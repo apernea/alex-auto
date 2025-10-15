@@ -7,7 +7,7 @@ import com.alexauto.model.Car;
 
 public interface CarService {
     List<Car> getCars();
-    List<Car> getAllCarTypes();
+    List<String> getAllCarTypes();
     Optional<Car> getCarById(Long id);
     Car addCar(Car car);
     boolean updateCar(Car car);
