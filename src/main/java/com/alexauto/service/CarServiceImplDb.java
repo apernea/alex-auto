@@ -61,8 +61,8 @@ public class CarServiceImplDb implements CarService {
 
     @Override
     public List<Car> getCarsByType(String type) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCarsByType'");
+        return carRepository.findByType(type);
     }
 
 }
+        
