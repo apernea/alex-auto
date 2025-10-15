@@ -7,45 +7,56 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.alexauto.model.Car;
+import com.alexauto.repository.CarRepo;
 
 @Service
 @Profile("db")
 public class CarServiceImplDb implements CarService {
+    private final CarRepo carRepository;
 
-    @Override
-    public List<Car> getCars() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCars'");
+    public CarServiceImplDb(CarRepo carRepository) {
+        this.carRepository = carRepository;
     }
 
     @Override
-    public List<Car> getAllCarTypes() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCarTypes'");
+    public List<Car> getCars() {
+        return carRepository.findAll();
+    }
+
+    @Override
+    public List<String> getAllCarTypes() {
+        return carRepository.findAll().stream()
+                .map(Car::getType)
+                .distinct()
+                .toList();
     }
 
     @Override
     public Optional<Car> getCarById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCarById'");
+        return carRepository.findById(id);
     }
 
     @Override
     public Car addCar(Car car) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addCar'");
+        return carRepository.save(car);
     }
 
     @Override
     public boolean updateCar(Car car) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateCar'");
+        if(carRepository.existsById(car.getId())){
+            carRepository.save(car);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean deleteCar(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCar'");
+        if(carRepository.existsById(id)){
+            carRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
