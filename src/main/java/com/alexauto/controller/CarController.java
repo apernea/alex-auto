@@ -27,19 +27,22 @@ public class CarController {
 
     @GetMapping("/car/id/{id}")
     public ResponseEntity<Optional<Car>> getCarById(@PathVariable Long id){
-        return ResponseEntity.ok(carService.getCarById(id));
+        Optional<Car> car = carService.getCarById(id);
+        if(car.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(car);
     }
 
     @GetMapping("/car/all")
     public ResponseEntity<List<Car>> getAllCars() {
         List<Car> allCars = carService.getCars();
-
         return ResponseEntity.ok(allCars);
     }
 
     @GetMapping("/car/types")
-    public ResponseEntity<List<Car>> getAllCarTypes() {
-        List<Car> allCarTypes = carService.getAllCarTypes();
+    public ResponseEntity<List<String>> getAllCarTypes() {
+        List<String> allCarTypes = carService.getAllCarTypes();
         return ResponseEntity.ok(allCarTypes);
     }
 
