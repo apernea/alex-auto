@@ -28,43 +28,57 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getCars() {
-        return CarDataLoader.getCars(); // Placeholder return
+        return CarDataLoader.getCars();
     }
 
     @Override
     public Optional<Car> getCarById(Long id) {
-        // Implementation logic to retrieve a car by its ID
-        return Optional.of(new Car()); // Placeholder return
+        return CarDataLoader.getCars().stream()
+            .filter(c -> c.getId().equals(id))
+            .findFirst();
     }
 
     @Override
     public Car addCar(Car car) {
-        // Implementation logic to create a new car
-        return car; // Placeholder return
+        car.setId(idCounter.incrementAndGet());
+        CarDataLoader.getCars().add(car);
+        return car;
     }
 
     @Override
     public boolean updateCar(Car car) {
-        // Implementation logic to update an existing car
-        return true; // Placeholder return
+        Optional<Car> existingCar = getCarById(car.getId());
+        if (existingCar.isPresent()) {
+            CarDataLoader.getCars().remove(existingCar.get());
+            CarDataLoader.getCars().add(car);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean deleteCar(Long id) {
-        // Implementation logic to delete a car by its ID
-        return false; // Placeholder return
+        Optional<Car> existingCar = getCarById(id);
+        if (existingCar.isPresent()) {
+            CarDataLoader.getCars().remove(existingCar.get());
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public List<Car> getAllCarTypes() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCarTypes'");
+    public List<String> getAllCarTypes() {
+        return CarDataLoader.getCars().stream()
+                .map(Car::getType)
+                .distinct()
+                .toList();
     }
 
     @Override
     public List<Car> getCarsByType(String type) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCarsByType'");
+        return CarDataLoader.getCars().stream()
+                .filter(car -> car.getType().equals(type))
+                .toList();
     }
 
 }
