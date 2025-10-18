@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alexauto.model.Car;
 import com.alexauto.service.CarService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -47,13 +49,13 @@ public class CarController {
     }
 
     @PostMapping("/car/add")
-    public ResponseEntity<Car> addCar(@RequestBody Car car) {
+    public ResponseEntity<Car> addCar(@Valid @RequestBody Car car) {
         Car createdCar = carService.addCar(car);
         return ResponseEntity.ok(createdCar);
     }
 
     @PutMapping("/car/update/id/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car car) {
+    public ResponseEntity<Car> updateCar(@PathVariable Long id, @Valid @RequestBody Car car) {
         Optional<Car> newCar = carService.getCarById(id);
         if(newCar.isPresent()) {
             carService.deleteCar(newCar.get().getId());
