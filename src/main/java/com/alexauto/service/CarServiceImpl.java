@@ -1,5 +1,7 @@
 package com.alexauto.service;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,5 +82,14 @@ public class CarServiceImpl implements CarService {
                 .filter(car -> car.getType().equals(type))
                 .toList();
     }
+
+    @Override
+    public Page<Car> searchCars(String make, String model, Integer minYear, Integer maxYear, Double maxPrice,
+            String type, String color, Integer minKilometers, Integer maxKilometers, Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'searchCars'");
+    }
+
+    
 
 }
