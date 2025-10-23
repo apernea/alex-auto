@@ -6,12 +6,10 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.alexauto.model.Car;
 import com.alexauto.repository.CarRepo;
-import com.alexauto.repository.CarSpecification;
 
 @Service
 @Profile("db")
