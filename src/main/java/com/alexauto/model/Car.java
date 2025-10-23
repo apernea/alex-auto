@@ -43,6 +43,7 @@ public class Car {
     private int kilometers;
 
     private String image_url;
+    
     @NotBlank(message = "Type is mandatory")
     private String type;
 }
