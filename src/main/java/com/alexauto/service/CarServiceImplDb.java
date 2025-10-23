@@ -3,11 +3,15 @@ package com.alexauto.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.alexauto.model.Car;
 import com.alexauto.repository.CarRepo;
+import com.alexauto.repository.CarSpecification;
 
 @Service
 @Profile("db")
@@ -63,6 +67,12 @@ public class CarServiceImplDb implements CarService {
     public List<Car> getCarsByType(String type) {
         return carRepository.findByType(type);
     }
+    
+    @Override
+    public Page<Car> searchCars(String make, String model, Integer minYear, Integer maxYear, Double maxPrice,
+            String type, String color, Integer minKilometers, Integer maxKilometers, Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'searchCars'");
+    }
 
 }
-        
