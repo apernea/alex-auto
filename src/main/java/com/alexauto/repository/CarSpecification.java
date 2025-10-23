@@ -10,6 +10,7 @@ import com.alexauto.model.Car;
 
 public class CarSpecification {
 
+    @SuppressWarnings("unused")
     public static Specification<Car> findByCriteria(
             String make, String model,
             Integer minYear, Integer maxYear,
