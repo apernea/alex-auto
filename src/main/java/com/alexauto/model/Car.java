@@ -39,6 +39,8 @@ public class Car {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
+    @Min(value = 0, message = "Kilometers must be equal or greater than 0")
+    private int kilometers;
 
     private String image_url;
     @NotBlank(message = "Type is mandatory")
