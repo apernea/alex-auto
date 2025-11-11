@@ -4,11 +4,17 @@
 
 **FEATURES**:
 1. Full CRUD Operations: Create, Read, Update, and Delete car records.
+   
 2.Dynamic Search and Filtering: A powerful /car/search endpoint that allows for combining multiple filter criteria (make, model, year range, price, kilometers, etc.) to find specific vehicles.
+
 3.Pagination and Sorting: All list-based endpoints are paginated and sortable to handle large datasets efficiently.
+
 4.Image Uploads: Link car objects to images by uploading files directly to the server.
+
 5.Input Validation: Ensures data integrity by validating all incoming data against predefined rules.
+
 6.Centralized Error Handling: Provides clean, consistent JSON error responses for invalid requests.
+
 7.Dual-Profile Configuration: Supports both a persistent database (db profile) and an in-memory (json profile) setup for flexible development and testing.
 
 **TECH STACK**:
