@@ -42,7 +42,7 @@ public class Car {
     @Min(value = 0, message = "Kilometers must be equal or greater than 0")
     private int kilometers;
 
-    private String image_url;
+    private String imageUrl;
     
     @NotBlank(message = "Type is mandatory")
     private String type;
