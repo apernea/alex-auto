@@ -7,66 +7,61 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.alexauto.model.Car;
+import com.alexauto.dto.CarSearchCriteria;
 
 public class CarSpecification {
 
-    @SuppressWarnings("unused")
-    public static Specification<Car> findByCriteria(
-            String make, String model,
-            Integer minYear, Integer maxYear,
-            Double maxPrice,
-            String type, String color,
-            Integer minKilometers, Integer maxKilometers) {
+    public static Specification<Car> findByCriteria(CarSearchCriteria criteria) {
 
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (make != null && !make.isEmpty()) {
+            if (criteria.getMake() != null && !criteria.getMake().isEmpty()) {
                 predicates.add(criteriaBuilder.like(
                         criteriaBuilder.lower(root.get("make")),
-                        "%" + make.toLowerCase() + "%"
+                        "%" + criteria.getMake().toLowerCase() + "%"
                 ));
             }
 
-            if (model != null && !model.isEmpty()) {
+            if (criteria.getModel() != null && !criteria.getModel().isEmpty()) {
                 predicates.add(criteriaBuilder.like(
                         criteriaBuilder.lower(root.get("model")),
-                        "%" + model.toLowerCase() + "%"
+                        "%" + criteria.getModel().toLowerCase() + "%"
                 ));
             }
 
-            if (minYear != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("year"), minYear));
+            if (criteria.getMinYear() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("year"), criteria.getMinYear()));
             }
 
-            if (maxYear != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("year"), maxYear));
+            if (criteria.getMaxYear() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("year"), criteria.getMaxYear()));
             }
 
-            if (maxPrice != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+            if (criteria.getMaxPrice() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), criteria.getMaxPrice()));
             }
 
-            if (type != null && !type.isEmpty()) {
+            if (criteria.getType() != null && !criteria.getType().isEmpty()) {
                 predicates.add(criteriaBuilder.equal(
                         criteriaBuilder.lower(root.get("type")),
-                        type.toLowerCase()
+                        criteria.getType().toLowerCase()
                 ));
             }
 
-            if (color != null && !color.isEmpty()) {
+            if (criteria.getColor() != null && !criteria.getColor().isEmpty()) {
                 predicates.add(criteriaBuilder.equal(
                         criteriaBuilder.lower(root.get("color")),
-                        color.toLowerCase()
+                        criteria.getColor().toLowerCase()
                 ));
             }
 
-            if (minKilometers != null) {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("kilometers"), minKilometers));
+            if (criteria.getMinKilometers() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("kilometers"), criteria.getMinKilometers()));
             }
 
-            if (maxKilometers != null) {
-                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("kilometers"), maxKilometers));
+            if (criteria.getMaxKilometers() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("kilometers"), criteria.getMaxKilometers()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
