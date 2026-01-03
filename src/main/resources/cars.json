@@ -7,7 +7,7 @@
     "color": "Silver",
     "price": 28500.00,
     "description": "Reliable midsize sedan with excellent fuel economy and spacious interior",
-    "image_url": "https://example.com/images/toyota-camry-2023.jpg"
+    "imageUrl": "https://example.com/images/toyota-camry-2023.jpg"
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "color": "Blue",
     "price": 24300.00,
     "description": "Compact car known for reliability and sporty handling",
-    "image_url": "https://example.com/images/honda-civic-2022.jpg"
+    "imageUrl": "https://example.com/images/honda-civic-2022.jpg"
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "color": "Black",
     "price": 45000.00,
     "description": "America's best-selling pickup truck with powerful performance",
-    "image_url": "https://example.com/images/ford-f150-2024.jpg"
+    "imageUrl": "https://example.com/images/ford-f150-2024.jpg"
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "color": "White",
     "price": 42500.00,
     "description": "Electric sedan with autopilot and long range capabilities",
-    "image_url": "https://example.com/images/tesla-model3-2023.jpg"
+    "imageUrl": "https://example.com/images/tesla-model3-2023.jpg"
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "color": "Gray",
     "price": 65000.00,
     "description": "Luxury SUV with premium features and advanced technology",
-    "image_url": "https://example.com/images/bmw-x5-2023.jpg"
+    "imageUrl": "https://example.com/images/bmw-x5-2023.jpg"
   },
   {
     "id": 6,
@@ -57,7 +57,7 @@
     "color": "Red",
     "price": 72000.00,
     "description": "Iconic American sports car with exceptional performance",
-    "image_url": "https://example.com/images/chevrolet-corvette-2024.jpg"
+    "imageUrl": "https://example.com/images/chevrolet-corvette-2024.jpg"
   },
   {
     "id": 7,
@@ -67,7 +67,7 @@
     "color": "Soul Red",
     "price": 31200.00,
     "description": "Stylish compact SUV with upscale interior and fun-to-drive dynamics",
-    "image_url": "https://example.com/images/mazda-cx5-2022.jpg"
+    "imageUrl": "https://example.com/images/mazda-cx5-2022.jpg"
   },
   {
     "id": 8,
@@ -77,7 +77,7 @@
     "color": "Pearl White",
     "price": 26500.00,
     "description": "Comfortable midsize sedan with modern safety features",
-    "image_url": "https://example.com/images/nissan-altima-2023.jpg"
+    "imageUrl": "https://example.com/images/nissan-altima-2023.jpg"
   },
   {
     "id": 9,
@@ -87,7 +87,7 @@
     "color": "Green",
     "price": 38900.00,
     "description": "Rugged off-road SUV with removable top and doors",
-    "image_url": "https://example.com/images/jeep-wrangler-2023.jpg"
+    "imageUrl": "https://example.com/images/jeep-wrangler-2023.jpg"
   },
   {
     "id": 10,
@@ -97,7 +97,7 @@
     "color": "Dark Blue",
     "price": 34500.00,
     "description": "All-wheel drive wagon perfect for adventures and family trips",
-    "image_url": "https://example.com/images/subaru-outback-2024.jpg"
+    "imageUrl": "https://example.com/images/subaru-outback-2024.jpg"
   },
   {
     "id": 11,
@@ -107,7 +107,7 @@
     "color": "Silver",
     "price": 44000.00,
     "description": "Premium compact sedan with cutting-edge technology",
-    "image_url": "https://example.com/images/audi-a4-2023.jpg"
+    "imageUrl": "https://example.com/images/audi-a4-2023.jpg"
   },
   {
     "id": 12,
@@ -117,7 +117,7 @@
     "color": "Black",
     "price": 52000.00,
     "description": "Luxury sedan with elegant design and refined performance",
-    "image_url": "https://example.com/images/mercedes-c-class-2024.jpg"
+    "imageUrl": "https://example.com/images/mercedes-c-class-2024.jpg"
   },
   {
     "id": 13,
@@ -127,7 +127,7 @@
     "color": "Red",
     "price": 32500.00,
     "description": "Hot hatch with sporty performance and practical versatility",
-    "image_url": "https://example.com/images/vw-golf-gti-2022.jpg"
+    "imageUrl": "https://example.com/images/vw-golf-gti-2022.jpg"
   },
   {
     "id": 14,
@@ -137,7 +137,7 @@
     "color": "White",
     "price": 29800.00,
     "description": "Stylish compact SUV with great warranty and modern features",
-    "image_url": "https://example.com/images/hyundai-tucson-2023.jpg"
+    "imageUrl": "https://example.com/images/hyundai-tucson-2023.jpg"
   },
   {
     "id": 15,
@@ -147,6 +147,6 @@
     "color": "Gray",
     "price": 30500.00,
     "description": "Refined SUV with bold styling and impressive tech",
-    "image_url": "https://example.com/images/kia-sportage-2024.jpg"
+    "imageUrl": "https://example.com/images/kia-sportage-2024.jpg"
   }
 ]
