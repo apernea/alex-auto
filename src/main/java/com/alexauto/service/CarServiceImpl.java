@@ -54,8 +54,9 @@ public class CarServiceImpl implements CarService {
     public boolean updateCar(Car car) {
         Optional<Car> existingCar = getCarById(car.getId());
         if (existingCar.isPresent()) {
-            CarDataLoader.getCars().remove(existingCar.get());
-            CarDataLoader.getCars().add(car);
+            List<Car> cars = CarDataLoader.getCars();
+            int index = cars.indexOf(existingCar.get());
+            cars.set(index, car);
             return true;
         }
         return false;
