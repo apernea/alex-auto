@@ -48,12 +48,18 @@ public class CarServiceImplDb implements CarService {
 
     @Override
     public boolean updateCar(Car car) {
-        if(carRepository.existsById(car.getId())){
-            carRepository.save(car);
-            return true;
+        if (car == null || car.getId() == null) {
+            return false;
         }
-        return false;
+
+        if (!carRepository.existsById(car.getId())) {
+            return false;
+        }
+
+        carRepository.save(car);
+        return true;
     }
+
 
     @Override
     public boolean deleteCar(Long id) {
