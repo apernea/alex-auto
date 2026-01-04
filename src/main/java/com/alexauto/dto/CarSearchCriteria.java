@@ -22,6 +22,9 @@ public class CarSearchCriteria {
     private Integer maxYear;
 
     @Positive(message = "Price must be positive")
+    private Double minPrice;
+
+    @Positive(message = "Price must be positive")
     private Double maxPrice;
 
     @Size(max = 50, message = "Type cannot exceed 50 characters")
