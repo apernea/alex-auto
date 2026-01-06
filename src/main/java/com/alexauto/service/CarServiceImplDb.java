@@ -1,7 +1,6 @@
 package com.alexauto.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.alexauto.dto.CarSearchCriteria;
+import com.alexauto.exception.ResourceNotFoundException;
 import com.alexauto.model.Car;
 import com.alexauto.repository.CarRepo;
 import com.alexauto.repository.CarSpecification;
@@ -37,8 +37,8 @@ public class CarServiceImplDb implements CarService {
     }
 
     @Override
-    public Optional<Car> getCarById(Long id) {
-        return carRepository.findById(id);
+    public Car getCarById(Long id) {
+        return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
     }
 
     @Override

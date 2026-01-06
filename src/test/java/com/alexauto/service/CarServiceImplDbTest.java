@@ -57,11 +57,11 @@ class CarServiceImplDbTest {
         when(carRepository.findById(id)).thenReturn(Optional.of(car));
 
         // When
-        Optional<Car> result = carService.getCarById(id);
+        Car result = carService.getCarById(id);
 
         // Then
-        assertThat(result).isPresent();
-        assertThat(result.get().getId()).isEqualTo(id);
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(id);
     }
 
     @Test
@@ -72,10 +72,10 @@ class CarServiceImplDbTest {
         when(carRepository.findById(id)).thenReturn(Optional.empty());
         
         // When
-        Optional<Car> result = carService.getCarById(id);
+        Car result = carService.getCarById(id);
         
         // Then
-        assertThat(result).isEmpty();
+        assertThat(result).isNull();
         verify(carRepository).findById(id);
     }
 

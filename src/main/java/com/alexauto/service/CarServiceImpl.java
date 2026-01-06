@@ -6,13 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import com.alexauto.dto.CarSearchCriteria;
 import com.alexauto.model.Car;
 import com.alexauto.utils.CarDataLoader;
+import com.alexauto.exception.ResourceNotFoundException;
 
 @Service
 @Profile("json")
@@ -22,7 +22,7 @@ public class CarServiceImpl implements CarService {
 
     public CarServiceImpl() {
         List<Car> cars = CarDataLoader.getCars();
-        if (!cars.isEmpty()) {
+        if (cars != null && !cars.isEmpty()) {
             long maxId = cars.stream()
                 .mapToLong(Car::getId)
                 .max()
@@ -33,14 +33,16 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getCars() {
-        return CarDataLoader.getCars();
+        List<Car> cars = CarDataLoader.getCars();
+        return cars != null ? cars : List.of();
     }
 
     @Override
-    public Optional<Car> getCarById(Long id) {
+    public Car getCarById(Long id) {
         return CarDataLoader.getCars().stream()
             .filter(c -> c.getId().equals(id))
-            .findFirst();
+            .findFirst()
+            .orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
     }
 
     @Override
@@ -52,21 +54,34 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean updateCar(Car car) {
-        Optional<Car> existingCar = getCarById(car.getId());
-        if (existingCar.isPresent()) {
-            List<Car> cars = CarDataLoader.getCars();
-            int index = cars.indexOf(existingCar.get());
-            cars.set(index, car);
-            return true;
+        // Validate input
+        if (car == null || car.getId() == null) {
+            return false;
+        }
+
+        List<Car> cars = CarDataLoader.getCars();
+        if (cars == null || cars.isEmpty()) {
+            return false;
+        }
+
+        // Find by id 
+        for (int i = 0; i < cars.size(); i++) {
+            Car existing = cars.get(i);
+            if (existing != null && car.getId().equals(existing.getId())) {
+                synchronized (cars) {
+                    cars.set(i, car);
+                }
+                return true;
+            }
         }
         return false;
     }
 
     @Override
     public boolean deleteCar(Long id) {
-        Optional<Car> existingCar = getCarById(id);
-        if (existingCar.isPresent()) {
-            CarDataLoader.getCars().remove(existingCar.get());
+        Car existingCar = getCarById(id);
+        if (existingCar != null) {
+            CarDataLoader.getCars().remove(existingCar);
             return true;
         }
         return false;

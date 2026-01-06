@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,15 +48,13 @@ class CarServiceImplTest {
         Long carId = 1L;
 
         // When
-        Optional<Car> foundCar = carService.getCarById(carId);
+        Car foundCar = carService.getCarById(carId);
 
         // Then
         assertThat(foundCar)
-                .isPresent()
-                .hasValueSatisfying(car -> {
-                    assertThat(car.getId()).isEqualTo(carId);
-                    assertThat(car.getMake()).isEqualTo("Toyota");
-                });
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("id", carId)
+                .hasFieldOrPropertyWithValue("make", "Toyota");
     }
 
     @Test
@@ -67,10 +64,10 @@ class CarServiceImplTest {
         Long carId = 999L;
 
         // When
-        Optional<Car> foundCar = carService.getCarById(carId);
+        Car foundCar = carService.getCarById(carId);
 
         // Then
-        assertThat(foundCar).isNotPresent();
+        assertThat(foundCar).isNull();
     }
 
     @Test
@@ -96,7 +93,7 @@ class CarServiceImplTest {
     @DisplayName("updateCar() should update an existing car")
     void updateCar_shouldUpdateExistingCar() {
         // Given
-        Car carToUpdate = carService.getCarById(1L).orElseThrow();
+        Car carToUpdate = carService.getCarById(1L);
         carToUpdate.setPrice(99999.0);
 
         // When
@@ -104,7 +101,7 @@ class CarServiceImplTest {
 
         // Then
         assertThat(result).isTrue();
-        assertThat(carService.getCarById(1L).get().getPrice()).isEqualTo(99999.0);
+        assertThat(carService.getCarById(1L).getPrice()).isEqualTo(99999.0);
     }
 
     @Test
@@ -129,7 +126,7 @@ class CarServiceImplTest {
 
         // Then
         assertThat(result).isTrue();
-        assertThat(carService.getCarById(1L)).isEmpty();
+        assertThat(carService.getCarById(1L)).isNull();
         assertThat(carService.getCars()).hasSize(14);
     }
 
