@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import com.alexauto.exception.ResourceNotFoundException;
 
 class CarServiceImplTest {
 
@@ -58,16 +60,13 @@ class CarServiceImplTest {
     }
 
     @Test
-    @DisplayName("getCarById() should return empty when an invalid ID is provided")
-    void getCarById_shouldReturnEmpty_whenInvalidId() {
+    @DisplayName("getCarById() should throw when an invalid ID is provided")
+    void getCarById_shouldThrow_whenInvalidId() {
         // Given
         Long carId = 999L;
 
-        // When
-        Car foundCar = carService.getCarById(carId);
-
         // Then
-        assertThat(foundCar).isNull();
+        assertThrows(ResourceNotFoundException.class, () -> carService.getCarById(carId));
     }
 
     @Test
@@ -97,47 +96,42 @@ class CarServiceImplTest {
         carToUpdate.setPrice(99999.0);
 
         // When
-        boolean result = carService.updateCar(carToUpdate);
+        Car updated = carService.updateCar(1L, carToUpdate);
 
         // Then
-        assertThat(result).isTrue();
+        assertThat(updated).isNotNull();
+        assertThat(updated.getPrice()).isEqualTo(99999.0);
         assertThat(carService.getCarById(1L).getPrice()).isEqualTo(99999.0);
     }
 
     @Test
-    @DisplayName("updateCar() should return false when car does not exist")
-    void updateCar_shouldReturnFalse_whenCarDoesNotExist() {
+    @DisplayName("updateCar() should throw when car does not exist")
+    void updateCar_shouldThrow_whenCarDoesNotExist() {
         // Given
         Car nonExistentCar = new Car();
-        nonExistentCar.setId(999L);
 
-        // When
-        boolean result = carService.updateCar(nonExistentCar);
-
-        // Then
-        assertThat(result).isFalse();
+        // When / Then
+        assertThrows(ResourceNotFoundException.class, () -> carService.updateCar(999L, nonExistentCar));
     }
 
     @Test
-    @DisplayName("deleteCar() should remove car and return true")
+    @DisplayName("deleteCar() should remove car and return the removed car when ID exists")
     void deleteCar_shouldRemoveCar_whenIdExists() {
         // When
-        boolean result = carService.deleteCar(1L);
+        Car removed = carService.deleteCar(1L);
 
         // Then
-        assertThat(result).isTrue();
-        assertThat(carService.getCarById(1L)).isNull();
+        assertThat(removed).isNotNull();
+        assertThat(removed.getId()).isEqualTo(1L);
+        assertThrows(ResourceNotFoundException.class, () -> carService.getCarById(1L));
         assertThat(carService.getCars()).hasSize(14);
     }
 
     @Test
-    @DisplayName("deleteCar() should return false when ID does not exist")
-    void deleteCar_shouldReturnFalse_whenIdDoesNotExist() {
-        // When
-        boolean result = carService.deleteCar(999L);
-
-        // Then
-        assertThat(result).isFalse();
+    @DisplayName("deleteCar() should throw when ID does not exist")
+    void deleteCar_shouldThrow_whenIdDoesNotExist() {
+        // When / Then
+        assertThrows(ResourceNotFoundException.class, () -> carService.deleteCar(999L));
         assertThat(carService.getCars()).hasSize(15);
     }
 

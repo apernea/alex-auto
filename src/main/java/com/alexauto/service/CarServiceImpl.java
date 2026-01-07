@@ -53,38 +53,41 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public boolean updateCar(Car car) {
-        // Validate input
-        if (car == null || car.getId() == null) {
-            return false;
+    public Car updateCar(Long id, Car car) {
+        if (car == null) {
+            throw new IllegalArgumentException("car must not be null");
         }
 
         List<Car> cars = CarDataLoader.getCars();
         if (cars == null || cars.isEmpty()) {
-            return false;
+            throw new ResourceNotFoundException("Car not found: " + id);
         }
 
-        // Find by id 
+        car.setId(id);
+
         for (int i = 0; i < cars.size(); i++) {
             Car existing = cars.get(i);
-            if (existing != null && car.getId().equals(existing.getId())) {
+            if (existing != null && id.equals(existing.getId())) {
                 synchronized (cars) {
                     cars.set(i, car);
                 }
-                return true;
+                return car;
             }
         }
-        return false;
+
+        throw new ResourceNotFoundException("Car not found: " + id);
     }
 
     @Override
-    public boolean deleteCar(Long id) {
-        Car existingCar = getCarById(id);
-        if (existingCar != null) {
-            CarDataLoader.getCars().remove(existingCar);
-            return true;
+    public Car deleteCar(Long id) {
+        Car existingCar = getCarById(id); // throws if not found
+        List<Car> cars = CarDataLoader.getCars();
+        if (cars != null) {
+            synchronized (cars) {
+                cars.removeIf(c -> c != null && id.equals(c.getId()));
+            }
         }
-        return false;
+        return existingCar;
     }
 
     @Override

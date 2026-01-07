@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+
+import com.alexauto.exception.ResourceNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 class CarServiceImplDbTest {
@@ -71,11 +74,8 @@ class CarServiceImplDbTest {
         Long id = 999L;
         when(carRepository.findById(id)).thenReturn(Optional.empty());
         
-        // When
-        Car result = carService.getCarById(id);
-        
-        // Then
-        assertThat(result).isNull();
+        // When / Then
+        assertThrows(ResourceNotFoundException.class, () -> carService.getCarById(id));
         verify(carRepository).findById(id);
     }
 
@@ -105,10 +105,10 @@ class CarServiceImplDbTest {
         when(carRepository.save(car)).thenReturn(car);
 
         // When
-        boolean result = carService.updateCar(car);
+        Car result = carService.updateCar(id, car);
 
         // Then
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo(car);
         verify(carRepository).save(car);
     }
 
@@ -119,12 +119,10 @@ class CarServiceImplDbTest {
         Car car = new Car();
         // id is null
         car.setId(null);
-        // When
-        boolean result = carService.updateCar(car);
-        
-        // Then
-        assertThat(result).isFalse();
-        verify(carRepository, never()).existsById(any());
+        // When / Then - attempting to update with a null id should throw ResourceNotFoundException
+        when(carRepository.existsById(null)).thenReturn(false);
+        assertThrows(ResourceNotFoundException.class, () -> carService.updateCar(null, car));
+        verify(carRepository).existsById(null);
         verify(carRepository, never()).save(any());
     }
 
@@ -133,13 +131,15 @@ class CarServiceImplDbTest {
     void deleteCar_shouldReturnTrue_whenExists() {
         // Given
         Long id = 1L;
-        when(carRepository.existsById(id)).thenReturn(true);
+        Car car = new Car();
+        car.setId(id);
+        when(carRepository.findById(id)).thenReturn(Optional.of(car));
 
         // When
-        boolean result = carService.deleteCar(id);
+        Car result = carService.deleteCar(id);
 
         // Then
-        assertThat(result).isTrue();
+        assertThat(result).isEqualTo(car);
         verify(carRepository).deleteById(id);
     }
 
@@ -148,14 +148,11 @@ class CarServiceImplDbTest {
     void deleteCar_shouldReturnFalse_whenNotExists() {
         // Given
         Long id = 1L;
-        when(carRepository.existsById(id)).thenReturn(false);
-        
-        // When
-        boolean result = carService.deleteCar(id);
-        
-        // Then
-        assertThat(result).isFalse();
-        verify(carRepository).existsById(id);
+        when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        // When / Then
+        assertThrows(ResourceNotFoundException.class, () -> carService.deleteCar(id));
+        verify(carRepository).findById(id);
         verify(carRepository, never()).deleteById(any());
         verifyNoMoreInteractions(carRepository);
     }

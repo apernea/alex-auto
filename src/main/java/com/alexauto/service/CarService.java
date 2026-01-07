@@ -13,8 +13,8 @@ public interface CarService {
     List<String> getAllCarTypes();
     Car getCarById(Long id);
     Car addCar(Car car);
-    boolean updateCar(Car car);
-    boolean deleteCar(Long id);
+        Car updateCar(Long id, Car car);
+        Car deleteCar(Long id);
     List<Car> getCarsByType(String type);
     Page<Car> searchCars(CarSearchCriteria criteria, Pageable pageable);
 }

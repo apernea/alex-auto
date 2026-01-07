@@ -30,10 +30,7 @@ public class CarServiceImplDb implements CarService {
 
     @Override
     public List<String> getAllCarTypes() {
-        return carRepository.findAll().stream()
-                .map(Car::getType)
-                .distinct()
-                .toList();
+        return carRepository.findDistinctTypes();
     }
 
     @Override
@@ -47,27 +44,26 @@ public class CarServiceImplDb implements CarService {
     }
 
     @Override
-    public boolean updateCar(Car car) {
-        if (car == null || car.getId() == null) {
-            return false;
+    public Car updateCar(Long id, Car car) {
+        if (car == null) {
+            throw new IllegalArgumentException("car must not be null");
         }
 
-        if (!carRepository.existsById(car.getId())) {
-            return false;
+        if (!carRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Car not found: " + id);
         }
 
-        carRepository.save(car);
-        return true;
+        car.setId(id);
+        return carRepository.save(car);
     }
 
 
     @Override
-    public boolean deleteCar(Long id) {
-        if(carRepository.existsById(id)){
-            carRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public Car deleteCar(Long id) {
+        Car existing = carRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
+        carRepository.deleteById(id);
+        return existing;
     }
 
     @Override

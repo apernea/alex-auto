@@ -35,9 +35,6 @@ public class CarController {
     @GetMapping("/cars/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id){
         Car car = carService.getCarById(id);
-        if(car == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return ResponseEntity.ok(car);
     }
 
@@ -67,22 +64,13 @@ public class CarController {
 
     @PutMapping("/cars/{id}")
     public ResponseEntity<Car> updateCar(@PathVariable Long id, @Valid @RequestBody Car car) {
-        Car newCar = carService.getCarById(id);
-        if(newCar != null) {
-            carService.deleteCar(newCar.getId());
-            carService.addCar(car);
-            return new ResponseEntity<>(car, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Car updatedCar = carService.updateCar(id, car);
+        return ResponseEntity.ok(updatedCar);
     }
 
     @DeleteMapping("/cars/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
-        Car car = carService.getCarById(id);
-        if(car != null) {
-            carService.deleteCar(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        carService.deleteCar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
