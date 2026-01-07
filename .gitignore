@@ -34,4 +34,5 @@ build/
 
 ### Application specific ###
 *.log
-application-local.yml
+application-local.ymlAlexAutoDemoQuery
+AlexAutoDemoQuery
