@@ -130,7 +130,7 @@ const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobil
           <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Max Mileage (km)</label>
           <input 
             type="number"
-            name="MaxKilometers"
+            name="maxKilometers"
             value={filters.maxKilometers}
             onChange={handleChange}
             placeholder="e.g. 20000"

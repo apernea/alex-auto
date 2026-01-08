@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
         if (filters.yearMin) params.append('minYear', filters.yearMin);
         if (filters.yearMax) params.append('maxYear', filters.yearMax);
         if (filters.priceMax) params.append('maxPrice', filters.priceMax);
-        if (filters.maxKilometers) params.append('maxKm', filters.maxKilometers);
+        if (filters.maxKilometers) params.append('maxKilometers', filters.maxKilometers);
         if (filters.type) params.append('type', filters.type);
         if (filters.hpMin) params.append('minHp', filters.hpMin);
         if (filters.hpMax) params.append('maxHp', filters.hpMax);
