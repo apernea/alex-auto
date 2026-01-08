@@ -36,3 +36,7 @@ build/
 *.log
 application-local.ymlAlexAutoDemoQuery
 AlexAutoDemoQuery
+AlexAutoDBQuery1
+AlexAutoDBQuery2
+AlexAutoDBQuery3
+.gitignore

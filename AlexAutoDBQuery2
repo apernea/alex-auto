@@ -1,18 +1,20 @@
 -- creere tabela pentru masini
-CREATE TABLE cars (
-    id VARCHAR(36) PRIMARY KEY,
-    brand VARCHAR(50),
-    model VARCHAR(50),
-    year INT,
-    km INT,
-    price DECIMAL(10,2),
-    type VARCHAR(30),
-    mainImage VARCHAR(255),
-    additionalImages JSON,
-    description TEXT,
-    engineSize INT,
-    horsepower INT,
-    fuelType VARCHAR(20),
-    gearbox VARCHAR(10)
+CREATE TABLE car (
+    id BIGINT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+
+    make NVARCHAR(50) NOT NULL,
+    model NVARCHAR(50) NOT NULL,
+    year INT NOT NULL,
+    color NVARCHAR(50) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    description NVARCHAR(MAX) NOT NULL,
+    kilometers INT NOT NULL,
+    imageUrl NVARCHAR(255),
+    type NVARCHAR(50) NOT NULL,
+    horsepower INT NOT NULL,
+    fuelType NVARCHAR(20) NOT NULL,
+    transmission NVARCHAR(20) NOT NULL,
+    engineSize INT NOT NULL
 );
+
 
