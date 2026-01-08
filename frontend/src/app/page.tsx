@@ -33,7 +33,7 @@ const mapBackendCarToFrontend = (backendCar: BackendCar): Car => ({
   price: backendCar.price,
   type: backendCar.type as CarType,
   mainImage: backendCar.imageUrl,
-  additionalImages: [], // Not available from backend
+  additionalImages: [], 
   description: backendCar.description,
   specifications: {
     engineSize: backendCar.engineSize,
