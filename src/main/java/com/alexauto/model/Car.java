@@ -56,6 +56,6 @@ public class Car {
     @NotBlank(message = "Transmission is mandatory")
     private String transmission;
 
-    @Min(value = 659, message ="Engine size must be at least 659cc")
+    @Min(value = 0, message ="Engine size must be at least 0")
     private int engineSize;
 }
