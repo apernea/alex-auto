@@ -38,4 +38,22 @@ public class CarSearchCriteria {
     
     @Min(value = 0, message = "Kilometers can't be negative")
     private Integer maxKilometers;
+
+    @Min(value = 1, message = "Horsepower must be at least 1")
+    private Integer minHorsepower;
+
+    @Min(value = 1, message = "Horsepower must be at least 1")
+    private Integer maxHorsepower;
+
+    @Size(max = 50, message = "Fuel type cannot exceed 50 characters")
+    private String fuelType;
+
+    @Size(max = 50, message = "Transmission cannot exceed 50 characters")
+    private String transmission;
+
+    @Min(value = 659, message = "Engine size must be at least 659cc")
+    private Integer minEngineSize;
+
+    @Max(value = 8500, message = "Engine size must be at most 8500cc")
+    private Integer maxEngineSize;
 }

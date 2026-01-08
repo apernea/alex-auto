@@ -64,6 +64,36 @@ public class CarSpecification {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("kilometers"), criteria.getMaxKilometers()));
             }
 
+            if (criteria.getMinHorsepower() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("horsepower"), criteria.getMinHorsepower()));
+            }
+
+            if (criteria.getMaxHorsepower() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("horsepower"), criteria.getMaxHorsepower()));
+            }
+
+            if (criteria.getFuelType() != null && !criteria.getFuelType().isEmpty()) {
+                predicates.add(criteriaBuilder.equal(
+                        criteriaBuilder.lower(root.get("fuelType")),
+                        criteria.getFuelType().toLowerCase()
+                ));
+            }
+
+            if (criteria.getTransmission() != null && !criteria.getTransmission().isEmpty()) {
+                predicates.add(criteriaBuilder.equal(
+                        criteriaBuilder.lower(root.get("transmission")),
+                        criteria.getTransmission().toLowerCase()
+                ));
+            }
+
+            if (criteria.getMinEngineSize() != null) {
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("engineSize"), criteria.getMinEngineSize()));
+            }
+
+            if (criteria.getMaxEngineSize() != null) {
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("engineSize"), criteria.getMaxEngineSize()));
+            }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

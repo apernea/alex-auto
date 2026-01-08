@@ -1,152 +1,197 @@
 [
   {
-    "id": 1,
     "make": "Toyota",
     "model": "Camry",
     "year": 2023,
     "color": "Silver",
-    "price": 28500.00,
+    "price": 28500.0,
     "description": "Reliable midsize sedan with excellent fuel economy and spacious interior",
-    "imageUrl": "https://example.com/images/toyota-camry-2023.jpg"
+    "imageUrl": "https://example.com/images/toyota-camry-2023.jpg",
+    "horsepower": 203,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 2500
   },
   {
-    "id": 2,
     "make": "Honda",
     "model": "Civic",
     "year": 2022,
     "color": "Blue",
-    "price": 24300.00,
+    "price": 24300.0,
     "description": "Compact car known for reliability and sporty handling",
-    "imageUrl": "https://example.com/images/honda-civic-2022.jpg"
+    "imageUrl": "https://example.com/images/honda-civic-2022.jpg",
+    "horsepower": 158,
+    "fuelType": "Gasoline",
+    "transmission": "CVT",
+    "engineSize": 2000
   },
   {
-    "id": 3,
     "make": "Ford",
     "model": "F-150",
     "year": 2024,
     "color": "Black",
-    "price": 45000.00,
+    "price": 45000.0,
     "description": "America's best-selling pickup truck with powerful performance",
-    "imageUrl": "https://example.com/images/ford-f150-2024.jpg"
+    "imageUrl": "https://example.com/images/ford-f150-2024.jpg",
+    "horsepower": 400,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 3500
   },
   {
-    "id": 4,
     "make": "Tesla",
     "model": "Model 3",
     "year": 2023,
     "color": "White",
-    "price": 42500.00,
+    "price": 42500.0,
     "description": "Electric sedan with autopilot and long range capabilities",
-    "imageUrl": "https://example.com/images/tesla-model3-2023.jpg"
+    "imageUrl": "https://example.com/images/tesla-model3-2023.jpg",
+    "horsepower": 283,
+    "fuelType": "Electric",
+    "transmission": "Single-speed",
+    "engineSize": 0
   },
   {
-    "id": 5,
     "make": "BMW",
     "model": "X5",
     "year": 2023,
     "color": "Gray",
-    "price": 65000.00,
+    "price": 65000.0,
     "description": "Luxury SUV with premium features and advanced technology",
-    "imageUrl": "https://example.com/images/bmw-x5-2023.jpg"
+    "imageUrl": "https://example.com/images/bmw-x5-2023.jpg",
+    "horsepower": 335,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 3000
   },
   {
-    "id": 6,
     "make": "Chevrolet",
     "model": "Corvette",
     "year": 2024,
     "color": "Red",
-    "price": 72000.00,
+    "price": 72000.0,
     "description": "Iconic American sports car with exceptional performance",
-    "imageUrl": "https://example.com/images/chevrolet-corvette-2024.jpg"
+    "imageUrl": "https://example.com/images/chevrolet-corvette-2024.jpg",
+    "horsepower": 495,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 6200
   },
   {
-    "id": 7,
     "make": "Mazda",
     "model": "CX-5",
     "year": 2022,
     "color": "Soul Red",
-    "price": 31200.00,
+    "price": 31200.0,
     "description": "Stylish compact SUV with upscale interior and fun-to-drive dynamics",
-    "imageUrl": "https://example.com/images/mazda-cx5-2022.jpg"
+    "imageUrl": "https://example.com/images/mazda-cx5-2022.jpg",
+    "horsepower": 187,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 2500
   },
   {
-    "id": 8,
     "make": "Nissan",
     "model": "Altima",
     "year": 2023,
     "color": "Pearl White",
-    "price": 26500.00,
+    "price": 26500.0,
     "description": "Comfortable midsize sedan with modern safety features",
-    "imageUrl": "https://example.com/images/nissan-altima-2023.jpg"
+    "imageUrl": "https://example.com/images/nissan-altima-2023.jpg",
+    "horsepower": 188,
+    "fuelType": "Gasoline",
+    "transmission": "CVT",
+    "engineSize": 2500
   },
   {
-    "id": 9,
     "make": "Jeep",
     "model": "Wrangler",
     "year": 2023,
     "color": "Green",
-    "price": 38900.00,
+    "price": 38900.0,
     "description": "Rugged off-road SUV with removable top and doors",
-    "imageUrl": "https://example.com/images/jeep-wrangler-2023.jpg"
+    "imageUrl": "https://example.com/images/jeep-wrangler-2023.jpg",
+    "horsepower": 285,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 3600
   },
   {
-    "id": 10,
     "make": "Subaru",
     "model": "Outback",
     "year": 2024,
     "color": "Dark Blue",
-    "price": 34500.00,
+    "price": 34500.0,
     "description": "All-wheel drive wagon perfect for adventures and family trips",
-    "imageUrl": "https://example.com/images/subaru-outback-2024.jpg"
+    "imageUrl": "https://example.com/images/subaru-outback-2024.jpg",
+    "horsepower": 182,
+    "fuelType": "Gasoline",
+    "transmission": "CVT",
+    "engineSize": 2500
   },
   {
-    "id": 11,
     "make": "Audi",
     "model": "A4",
     "year": 2023,
     "color": "Silver",
-    "price": 44000.00,
+    "price": 44000.0,
     "description": "Premium compact sedan with cutting-edge technology",
-    "imageUrl": "https://example.com/images/audi-a4-2023.jpg"
+    "imageUrl": "https://example.com/images/audi-a4-2023.jpg",
+    "horsepower": 261,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 2000
   },
   {
-    "id": 12,
     "make": "Mercedes-Benz",
     "model": "C-Class",
     "year": 2024,
     "color": "Black",
-    "price": 52000.00,
+    "price": 52000.0,
     "description": "Luxury sedan with elegant design and refined performance",
-    "imageUrl": "https://example.com/images/mercedes-c-class-2024.jpg"
+    "imageUrl": "https://example.com/images/mercedes-c-class-2024.jpg",
+    "horsepower": 255,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 2000
   },
   {
-    "id": 13,
     "make": "Volkswagen",
     "model": "Golf GTI",
     "year": 2022,
     "color": "Red",
-    "price": 32500.00,
+    "price": 32500.0,
     "description": "Hot hatch with sporty performance and practical versatility",
-    "imageUrl": "https://example.com/images/vw-golf-gti-2022.jpg"
+    "imageUrl": "https://example.com/images/vw-golf-gti-2022.jpg",
+    "horsepower": 241,
+    "fuelType": "Gasoline",
+    "transmission": "Manual",
+    "engineSize": 2000
   },
   {
-    "id": 14,
     "make": "Hyundai",
     "model": "Tucson",
     "year": 2023,
     "color": "White",
-    "price": 29800.00,
+    "price": 29800.0,
     "description": "Stylish compact SUV with great warranty and modern features",
-    "imageUrl": "https://example.com/images/hyundai-tucson-2023.jpg"
+    "imageUrl": "https://example.com/images/hyundai-tucson-2023.jpg",
+    "horsepower": 187,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 2500
   },
   {
-    "id": 15,
     "make": "Kia",
     "model": "Sportage",
     "year": 2024,
     "color": "Gray",
-    "price": 30500.00,
+    "price": 30500.0,
     "description": "Refined SUV with bold styling and impressive tech",
-    "imageUrl": "https://example.com/images/kia-sportage-2024.jpg"
+    "imageUrl": "https://example.com/images/kia-sportage-2024.jpg",
+    "horsepower": 187,
+    "fuelType": "Gasoline",
+    "transmission": "Automatic",
+    "engineSize": 2500
   }
 ]

@@ -46,4 +46,16 @@ public class Car {
     
     @NotBlank(message = "Type is mandatory")
     private String type;
+
+    @Min(value = 1, message = "Horsepower must be at least 1")
+    private int horsepower;
+
+    @NotBlank(message = "Fuel type is mandatory")
+    private String fuelType;
+
+    @NotBlank(message = "Transmission is mandatory")
+    private String transmission;
+
+    @Min(value = 659, message ="Engine size must be at least 659cc")
+    private int engineSize;
 }
