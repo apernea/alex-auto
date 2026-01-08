@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { BRANDS, CAR_TYPES } from '@/utils/constants';
+import { MAKERS, CAR_TYPES } from '@/utils/constants';
 import { FilterState } from '@/utils/types';
 
 interface SidebarProps {
@@ -18,11 +18,11 @@ const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobil
 
   const resetFilters = () => {
     setFilters({
-      brand: '',
+      make: '',
       model: '',
       yearMin: '',
       yearMax: '',
-      kmMax: '',
+      maxKilometers: '',
       priceMax: '',
       type: '',
       hpMin: '',
@@ -58,17 +58,17 @@ const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobil
       </div>
 
       <div className="space-y-8 pb-10">
-        {/* Brand */}
+        {/* Make */}
         <div>
-          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Brand</label>
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Make</label>
           <select 
-            name="brand"
-            value={filters.brand}
+            name="make"
+            value={filters.make}
             onChange={handleChange}
             className="w-full bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-xl focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 block p-4 transition-all outline-none font-bold appearance-none"
           >
             <option value="">All Manufacturers</option>
-            {BRANDS.map(b => <option key={b} value={b}>{b}</option>)}
+            {MAKERS.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
         </div>
 
@@ -130,8 +130,8 @@ const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobil
           <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Max Mileage (km)</label>
           <input 
             type="number"
-            name="kmMax"
-            value={filters.kmMax}
+            name="MaxKilometers"
+            value={filters.maxKilometers}
             onChange={handleChange}
             placeholder="e.g. 20000"
             className="w-full bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-xl focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 block p-4 transition-all outline-none font-bold"

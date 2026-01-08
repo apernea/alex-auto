@@ -61,7 +61,7 @@ const CarDetail: React.FC<CarDetailProps> = ({ car, onBack }) => {
         <div className="space-y-6">
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 sticky top-8">
             <div className="mb-6">
-              <span className="text-gray-500 text-sm uppercase tracking-widest font-bold">{car.brand}</span>
+              <span className="text-gray-500 text-sm uppercase tracking-widest font-bold">{car.make}</span>
               <h1 className="text-4xl font-black text-gray-900 mt-1">{car.model}</h1>
               <div className="flex items-center mt-2 text-gray-600 space-x-3">
                 <span>{car.year}</span>

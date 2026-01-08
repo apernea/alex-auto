@@ -10,7 +10,7 @@ export enum CarType {
 
 export interface Car {
   id: string;
-  brand: string;
+  make: string;
   model: string;
   year: number;
   km: number;
@@ -28,11 +28,11 @@ export interface Car {
 }
 
 export interface FilterState {
-  brand: string;
+  make: string;
   model: string;
   yearMin: string;
   yearMax: string;
-  kmMax: string;
+  maxKilometers: string;
   priceMax: string;
   type: string;
   hpMin: string;

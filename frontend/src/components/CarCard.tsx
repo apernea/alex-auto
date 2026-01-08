@@ -16,7 +16,7 @@ const CarCard: React.FC<CarCardProps> = ({ car, onClick }) => {
       <div className="relative h-48 overflow-hidden">
         <img 
           src={car.mainImage} 
-          alt={`${car.brand} ${car.model}`}
+          alt={`${car.make} ${car.model}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold uppercase tracking-wider text-gray-800">
@@ -27,7 +27,7 @@ const CarCard: React.FC<CarCardProps> = ({ car, onClick }) => {
       <div className="p-4">
         <div className="flex justify-between items-start mb-1">
           <h3 className="font-bold text-lg text-gray-900 leading-tight">
-            {car.brand} {car.model}
+            {car.make} {car.model}
           </h3>
           <span className="text-blue-600 font-bold text-lg">
             ${car.price.toLocaleString()}

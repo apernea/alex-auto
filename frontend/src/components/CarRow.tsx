@@ -17,7 +17,7 @@ const CarRow: React.FC<CarRowProps> = ({ car, onClick }) => {
       <div className="w-full md:w-48 h-32 flex-shrink-0 overflow-hidden rounded-lg shadow-sm">
         <img 
           src={car.mainImage} 
-          alt={`${car.brand} ${car.model}`}
+          alt={`${car.make} ${car.model}`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
@@ -25,8 +25,8 @@ const CarRow: React.FC<CarRowProps> = ({ car, onClick }) => {
       {/* Brand & Model */}
       <div className="flex-1 min-w-0 text-center md:text-left">
         <div className="flex flex-col">
-          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">{car.brand}</span>
           <h3 className="text-xl font-bold text-gray-900 truncate">
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">{car.make}</span>
             {car.model}
           </h3>
           <span className="text-sm text-gray-500 md:hidden mt-1">{car.year} • {car.km.toLocaleString()} km</span>

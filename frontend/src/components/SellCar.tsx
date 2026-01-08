@@ -1,18 +1,24 @@
 'use client';
 import React, { useState } from 'react';
-import { BRANDS, CAR_TYPES } from '@/utils/constants';
+import { MAKERS, CAR_TYPES } from '@/utils/constants';
 import { Car, CarType } from '@/utils/types';
+
+type SellCarPayload = Omit<Car, 'id'> & {
+  mainImageFile?: File | null;
+  additionalImageFiles?: File[];
+};
 
 interface SellCarProps {
   onBack: () => void;
-  onAddCar: (car: Car) => void;
+  onAddCar: (car: SellCarPayload) => void;
 }
 
 const SellCar: React.FC<SellCarProps> = ({ onBack, onAddCar }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [images, setImages] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [formData, setFormData] = useState({
-    brand: '',
+    make: '',
     model: '',
     year: new Date().getFullYear().toString(),
     type: CarType.SEDAN,
@@ -31,42 +37,44 @@ const SellCar: React.FC<SellCarProps> = ({ onBack, onAddCar }) => {
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setImages(prev => [...prev, event.target!.result as string]);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setImageFiles(prev => [...prev, file]);
+    setImagePreviews(prev => [...prev, URL.createObjectURL(file)]);
+
+    e.target.value = '';
   };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const engineSizeNum = parseInt(formData.engineSize) || 0;
 
-    const newCar: Car = {
-      id: Date.now().toString(),
-      brand: formData.brand,
+    const payload: SellCarPayload = {
+      // Car fields (no id here)
+      make: formData.make,
       model: formData.model,
-      year: parseInt(formData.year),
-      km: parseInt(formData.km),
-      price: parseInt(formData.price),
+      year: parseInt(formData.year) || 1900,
+      km: parseInt(formData.km) || 0,
+      price: parseInt(formData.price) || 0,
       type: formData.type as CarType,
-      mainImage: images[0] || 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=800',
-      additionalImages: images.slice(1),
+      mainImage: imagePreviews[0] || 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=800',
+      additionalImages: imagePreviews.slice(1),
       description: formData.description,
       specifications: {
         engineSize: engineSizeNum,
         horsepower: parseInt(formData.horsepower) || 1,
         fuelType: engineSizeNum === 0 ? 'Electric' : formData.fuelType,
         gearbox: formData.gearbox,
-      }
+      },
+
+      mainImageFile: imageFiles[0] ?? null,
+      additionalImageFiles: imageFiles.slice(1),
     };
 
-    onAddCar(newCar);
+    onAddCar(payload);
     setIsSubmitted(true);
   };
 
@@ -114,10 +122,17 @@ const SellCar: React.FC<SellCarProps> = ({ onBack, onAddCar }) => {
               <span className="text-xs font-bold text-gray-400 group-hover:text-blue-600 uppercase">Add Photo</span>
               <input type="file" className="hidden" onChange={handleImageUpload} accept="image/*" />
             </label>
-            {images.map((img, i) => (
+            {imagePreviews.map((img, i) => (
               <div key={i} className="aspect-square rounded-2xl overflow-hidden shadow-sm relative group">
                 <img src={img} className="w-full h-full object-cover" alt="Uploaded car" />
-                <button type="button" onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                <button type="button" onClick={() => {
+                    setImageFiles(prev => prev.filter((_, idx) => idx !== i));
+                    setImagePreviews(prev => {
+                      const url = prev[i];
+                      if (url) URL.revokeObjectURL(url);
+                      return prev.filter((_, idx) => idx !== i);
+                    });
+                  }} className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
               </div>
@@ -132,10 +147,10 @@ const SellCar: React.FC<SellCarProps> = ({ onBack, onAddCar }) => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Brand</label>
-              <select name="brand" required value={formData.brand} onChange={handleInputChange} className="w-full bg-gray-50 border border-gray-100 p-4 rounded-xl outline-none font-semibold text-black">
-                <option value="">Select Brand</option>
-                {BRANDS.map(b => <option key={b} value={b}>{b}</option>)}
+              <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Make</label>
+              <select name="make" required value={formData.make} onChange={handleInputChange} className="w-full bg-gray-50 border border-gray-100 p-4 rounded-xl outline-none font-semibold text-black">
+                <option value="">Select Make</option>
+                {MAKERS.map(m => <option key={m} value={m}>{m}</option>)}
               </select>
             </div>
             <div>

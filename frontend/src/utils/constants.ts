@@ -1,13 +1,13 @@
 
 import { Car, CarType } from './types';
 
-export const BRANDS = ['Tesla', 'BMW', 'Mercedes', 'Audi', 'Porsche', 'Ford', 'Toyota', 'Honda', 'Ferrari', 'Lamborghini'];
+export const MAKERS = ['Tesla', 'BMW', 'Mercedes', 'Audi', 'Porsche', 'Ford', 'Toyota', 'Honda', 'Ferrari', 'Lamborghini'];
 export const CAR_TYPES = Object.values(CarType);
 
 export const MOCK_CARS: Car[] = [
   {
     id: '1',
-    brand: 'Tesla',
+    make: 'Tesla',
     model: 'Model S Plaid',
     year: 2023,
     km: 1200,
@@ -27,7 +27,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '2',
-    brand: 'Porsche',
+    make: 'Porsche',
     model: '911 Carrera S',
     year: 2022,
     km: 8500,
@@ -45,7 +45,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '3',
-    brand: 'BMW',
+    make: 'BMW',
     model: 'X5 M50i',
     year: 2021,
     km: 24000,
@@ -63,7 +63,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '4',
-    brand: 'Mercedes',
+    make: 'Mercedes',
     model: 'EQS 580',
     year: 2023,
     km: 500,
@@ -81,7 +81,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '5',
-    brand: 'Audi',
+    make: 'Audi',
     model: 'RS6 Avant',
     year: 2022,
     km: 15000,
@@ -99,7 +99,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '6',
-    brand: 'Ford',
+    make: 'Ford',
     model: 'F-150 Lightning',
     year: 2023,
     km: 2000,
@@ -117,7 +117,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '7',
-    brand: 'Ferrari',
+    make: 'Ferrari',
     model: '296 GTB',
     year: 2024,
     km: 150,
@@ -135,7 +135,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '8',
-    brand: 'Lamborghini',
+    make: 'Lamborghini',
     model: 'Urus Performante',
     year: 2023,
     km: 3400,
@@ -153,7 +153,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '9',
-    brand: 'Toyota',
+    make: 'Toyota',
     model: 'Supra GR',
     year: 2022,
     km: 12000,
@@ -171,7 +171,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '10',
-    brand: 'Audi',
+    make: 'Audi',
     model: 'e-tron GT',
     year: 2023,
     km: 1100,
@@ -189,7 +189,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '11',
-    brand: 'Honda',
+    make: 'Honda',
     model: 'Civic Type R',
     year: 2023,
     km: 4500,
@@ -207,7 +207,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '12',
-    brand: 'Mercedes',
+    make: 'Mercedes',
     model: 'G 63 AMG',
     year: 2022,
     km: 18000,
@@ -225,7 +225,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '13',
-    brand: 'Ford',
+    make: 'Ford',
     model: 'Mustang Mach-E GT',
     year: 2023,
     km: 5600,
@@ -243,7 +243,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '14',
-    brand: 'Tesla',
+    make: 'Tesla',
     model: 'Model 3 Performance',
     year: 2024,
     km: 200,
@@ -261,7 +261,7 @@ export const MOCK_CARS: Car[] = [
   },
   {
     id: '15',
-    brand: 'Toyota',
+    make: 'Toyota',
     model: 'Land Cruiser 300',
     year: 2023,
     km: 5000,
