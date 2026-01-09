@@ -14,4 +14,7 @@ public interface CarRepo extends JpaRepository<Car, Long>, JpaSpecificationExecu
 
     @Query("SELECT DISTINCT c.type FROM Car c")
     List<String> findDistinctTypes();
+
+    @Query("SELECT DISTINCT c.color FROM Car c")
+    List<String> findDistinctColors();
 }

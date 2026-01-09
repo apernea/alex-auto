@@ -11,6 +11,7 @@ import com.alexauto.model.Car;
 public interface CarService {
     List<Car> getCars();
     List<String> getAllCarTypes();
+    List<String> getAllCarColors();
     Car getCarById(Long id);
     Car addCar(Car car);
         Car updateCar(Long id, Car car);

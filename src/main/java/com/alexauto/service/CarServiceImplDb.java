@@ -34,6 +34,11 @@ public class CarServiceImplDb implements CarService {
     }
 
     @Override
+    public List<String> getAllCarColors() {
+        return carRepository.findDistinctColors();
+    }
+
+    @Override
     public Car getCarById(Long id) {
         return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
     }

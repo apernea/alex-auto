@@ -51,6 +51,7 @@ const HomePage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [sortOption, setSortOption] = useState('price-asc');
+  const [colors, setColors] = useState<string[]>([]);
   const [filters, setFilters] = useState<FilterState>({
     make: '',
     model: '',
@@ -59,6 +60,7 @@ const HomePage: React.FC = () => {
     maxKilometers: '',
     priceMax: '',
     type: '',
+    color: '',
     hpMin: '',
     hpMax: '',
     fuelType: '',
@@ -66,6 +68,22 @@ const HomePage: React.FC = () => {
   });
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+
+  useEffect(() => {
+    const fetchColors = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/colors`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch colors');
+        }
+        const data = await response.json();
+        setColors(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchColors();
+  }, []);
 
   type Page<T> = {
       content: T[];
@@ -88,8 +106,9 @@ const HomePage: React.FC = () => {
         if (filters.priceMax) params.append('maxPrice', filters.priceMax);
         if (filters.maxKilometers) params.append('maxKilometers', filters.maxKilometers);
         if (filters.type) params.append('type', filters.type);
-        if (filters.hpMin) params.append('minHp', filters.hpMin);
-        if (filters.hpMax) params.append('maxHp', filters.hpMax);
+        if (filters.color) params.append('color', filters.color);
+        if (filters.hpMin) params.append('minHorsepower', filters.hpMin);
+        if (filters.hpMax) params.append('maxHorsepower', filters.hpMax);
         if (filters.fuelType) params.append('fuelType', filters.fuelType);
         if (filters.gearbox) params.append('transmission', filters.gearbox);
 
@@ -151,11 +170,11 @@ const HomePage: React.FC = () => {
         <div className={`fixed inset-0 z-[60] lg:hidden transition-opacity duration-300 ${isMobileFilterOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsMobileFilterOpen(false)} />
           <div className={`absolute top-0 left-0 bottom-0 w-[85%] max-w-sm transform transition-transform duration-300 ease-in-out ${isMobileFilterOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-            <Sidebar filters={filters} setFilters={setFilters} onClose={() => setIsMobileFilterOpen(false)} isMobile />
+            <Sidebar filters={filters} setFilters={setFilters} onClose={() => setIsMobileFilterOpen(false)} isMobile colors={colors} />
           </div>
         </div>
 
-        <Sidebar filters={filters} setFilters={setFilters} />
+        <Sidebar filters={filters} setFilters={setFilters} colors={colors} />
 
         <main className="flex-1 min-w-0 p-4 md:p-6 lg:p-10 bg-white/50 backdrop-blur-3xl">
           <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -274,7 +293,7 @@ const HomePage: React.FC = () => {
               <h3 className="text-2xl font-black text-gray-900 tracking-tight">No results matched your search</h3>
               <p className="text-gray-500 mt-2 font-medium">Try adjusting your filters or search criteria.</p>
               <button 
-                onClick={() => setFilters({ make: '', model: '', yearMin: '', yearMax: '', maxKilometers: '', priceMax: '', type: '', hpMin: '', hpMax: '', fuelType: '', gearbox: '' })}
+                onClick={() => setFilters({ make: '', model: '', yearMin: '', yearMax: '', maxKilometers: '', priceMax: '', type: '', color: '', hpMin: '', hpMax: '', fuelType: '', gearbox: '' })}
                 className="mt-10 bg-gray-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-600 transition-all transform hover:scale-105"
               >
                 Reset All Filters

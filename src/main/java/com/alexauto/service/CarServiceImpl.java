@@ -177,4 +177,12 @@ public class CarServiceImpl implements CarService {
         return new PageImpl<>(pageContent, pageable, filteredCars.size());
     }
 
+    @Override
+    public List<String> getAllCarColors() {
+        return CarDataLoader.getCars().stream()
+                .map(Car::getColor)
+                .distinct()
+                .toList();
+    }    
+
 }

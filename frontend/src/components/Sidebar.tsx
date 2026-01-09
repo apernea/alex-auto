@@ -8,9 +8,10 @@ interface SidebarProps {
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
   onClose?: () => void;
   isMobile?: boolean;
+  colors: string[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobile }) => {
+const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobile, colors }) => {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
@@ -25,6 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobil
       maxKilometers: '',
       priceMax: '',
       type: '',
+      color: '',
       hpMin: '',
       hpMax: '',
       fuelType: '',
@@ -84,6 +86,43 @@ const Sidebar: React.FC<SidebarProps> = ({ filters, setFilters, onClose, isMobil
             <option value="">All Body Styles</option>
             {CAR_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
+        </div>
+
+        {/* Color */}
+        <div>
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Color</label>
+          <select 
+            name="color"
+            value={filters.color}
+            onChange={handleChange}
+            className="w-full bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-xl focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 block p-4 transition-all outline-none font-bold appearance-none"
+          >
+            <option value="">All Colors</option>
+            {colors.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+
+        {/* Horsepower Range */}
+        <div>
+          <label className="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Horsepower</label>
+          <div className="grid grid-cols-2 gap-3">
+            <input 
+              type="number"
+              name="hpMin"
+              value={filters.hpMin}
+              onChange={handleChange}
+              placeholder="Min"
+              className="w-full bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-xl focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 block p-4 transition-all outline-none font-bold"
+            />
+            <input 
+              type="number"
+              name="hpMax"
+              value={filters.hpMax}
+              onChange={handleChange}
+              placeholder="Max"
+              className="w-full bg-gray-50 border border-gray-100 text-gray-900 text-sm rounded-xl focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 block p-4 transition-all outline-none font-bold"
+            />
+          </div>
         </div>
 
         {/* Price Max */}

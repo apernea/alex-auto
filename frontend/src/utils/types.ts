@@ -35,6 +35,7 @@ export interface FilterState {
   maxKilometers: string;
   priceMax: string;
   type: string;
+  color: string;
   hpMin: string;
   hpMax: string;
   fuelType: string;

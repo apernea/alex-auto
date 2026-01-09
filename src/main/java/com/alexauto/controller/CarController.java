@@ -51,6 +51,12 @@ public class CarController {
         return ResponseEntity.ok(allCarTypes);
     }
 
+    @GetMapping("/cars/colors")
+    public ResponseEntity<List<String>> getAllCarColors() {
+        List<String> allCarColors = carService.getAllCarColors();
+        return ResponseEntity.ok(allCarColors);
+    }
+
     @GetMapping("/cars/search")
     public ResponseEntity<Page<Car>> searchCars(CarSearchCriteria criteria, Pageable pageable) {
         Page<Car> carsPage = carService.searchCars(criteria, pageable);
