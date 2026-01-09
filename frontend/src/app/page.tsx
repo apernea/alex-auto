@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import CarRow from '@/components/CarRow';
@@ -96,6 +96,10 @@ const HomePage: React.FC = () => {
         params.append('page', (currentPage - 1).toString());
         params.append('size', ITEMS_PER_PAGE.toString());
 
+        const [sortField, sortOrder] = sortOption.split('-');
+        const backendSortField = sortField === 'km' ? 'kilometers' : sortField;
+        params.append('sort', `${backendSortField},${sortOrder}`);
+
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/cars/search?${params.toString()}`
         );
@@ -126,31 +130,14 @@ const HomePage: React.FC = () => {
 
 
     fetchCars();
-  }, [filters, currentPage]);
+  }, [filters, currentPage, sortOption]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
 
-  const sortedCars = useMemo(() => {
-    const sorted = [...cars]; // Create a new array to avoid mutating state directly
-    switch (sortOption) {
-      case 'price-asc':
-        sorted.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-desc':
-        sorted.sort((a, b) => b.price - a.price);
-        break;
-      case 'year-desc':
-        sorted.sort((a, b) => b.year - a.year);
-        break;
-      case 'km-asc':
-        sorted.sort((a, b) => a.km - b.km);
-        break;
-    }
-    return sorted;
-  }, [cars, sortOption]);
+
 
   const handleCarClick = (id: string) => {
     router.push(`/car/${id}`);
@@ -201,7 +188,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {sortedCars.length > 0 ? (
+          {cars.length > 0 ? (
             <>
               <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/40 border border-gray-100 overflow-hidden mb-10">
                 <div className="overflow-x-auto scrollbar-hide">
@@ -216,7 +203,7 @@ const HomePage: React.FC = () => {
                       <div className="w-24"></div>
                     </div>
                     <div className="divide-y divide-gray-50">
-                      {sortedCars.map(car => (
+                      {cars.map(car => (
                         <CarRow key={car.id} car={car} onClick={handleCarClick} />
                       ))}
                     </div>
@@ -245,7 +232,7 @@ const HomePage: React.FC = () => {
                   <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
                       <p className="text-sm font-medium text-gray-400">
-                        Showing <span className="font-black text-gray-900">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> to <span className="font-black text-gray-900">{Math.min(currentPage * ITEMS_PER_PAGE, totalItems)}</span> of <span className="font-black text-gray-900">{sortedCars.length}</span> results
+                        Showing <span className="font-black text-gray-900">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> to <span className="font-black text-gray-900">{Math.min(currentPage * ITEMS_PER_PAGE, totalItems)}</span> of <span className="font-black text-gray-900">{totalItems}</span> results
                       </p>
                     </div>
                     <div>

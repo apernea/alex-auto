@@ -6,9 +6,8 @@ import com.alexauto.model.Car;
 import com.alexauto.service.CarService;
 import com.alexauto.dto.CarSearchCriteria;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 
@@ -53,8 +52,8 @@ public class CarController {
     }
 
     @GetMapping("/cars/search")
-    public ResponseEntity<Page<Car>> searchCars(CarSearchCriteria criteria, @RequestParam int page, @RequestParam int size) {
-        Page<Car> carsPage = carService.searchCars(criteria, PageRequest.of(page, size));
+    public ResponseEntity<Page<Car>> searchCars(CarSearchCriteria criteria, Pageable pageable) {
+        Page<Car> carsPage = carService.searchCars(criteria, pageable);
         return ResponseEntity.ok(carsPage);
     }
 
