@@ -13,7 +13,7 @@ async function uploadImage(file: File): Promise<string> {
   const fd = new FormData();
   fd.append('file', file);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/uploads`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/uploads`, {
     method: 'POST',
     body: fd,
   });
@@ -56,7 +56,7 @@ const SellPage: React.FC = () => {
         engineSize: newCar.specifications.engineSize,
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/cars`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(backendCarPayload),

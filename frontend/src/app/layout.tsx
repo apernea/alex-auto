@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
-// @ts-ignore - allow side-effect css import without type declarations
+// @ts-expect-error -- CSS import causes type error in Next.js layout
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

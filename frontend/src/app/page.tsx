@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchColors = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/colors`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/cars/colors`);
         if (!response.ok) {
           throw new Error('Failed to fetch colors');
         }
@@ -158,7 +158,7 @@ const HomePage: React.FC = () => {
         params.append('sort', `${backendSortField},${sortOrder}`);
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/cars/search?${params.toString()}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/cars/search?${params.toString()}`
         );
 
         if (!response.ok) {

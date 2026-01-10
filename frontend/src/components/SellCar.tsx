@@ -107,7 +107,7 @@ const SellCar: React.FC<SellCarProps> = ({ onBack, onAddCar }) => {
           Cancel Listing
         </button>
         <h1 className="text-5xl font-black text-gray-900 tracking-tighter">Sell Your Vehicle</h1>
-        <p className="text-gray-500 text-lg mt-2 font-medium">List your car on the world's most exclusive marketplace.</p>
+        <p className="text-gray-500 text-lg mt-2 font-medium">List your car on the world&apos;s most exclusive marketplace.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-10">

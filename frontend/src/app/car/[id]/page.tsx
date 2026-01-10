@@ -60,7 +60,7 @@ export default function CarDetailPage() {
     const fetchCar = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/cars/${id}`);
         if (!response.ok) {
           throw new Error('Car not found');
         }

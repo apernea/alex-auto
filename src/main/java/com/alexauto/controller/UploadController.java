@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin(origins = "${app.cors.origins:http://localhost:3000}")
-@RequestMapping("/uploads")
+@RequestMapping("/api/v1/uploads")
 public class UploadController {
     private final FileStorageService fileStorageService;
 
