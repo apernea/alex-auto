@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 import CarRow from '@/components/CarRow';
 import { FilterState, Car, CarType } from '@/utils/types';
@@ -47,25 +47,64 @@ const ITEMS_PER_PAGE = 10;
 
 const HomePage: React.FC = () => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [cars, setCars] = useState<Car[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [sortOption, setSortOption] = useState('price-asc');
   const [colors, setColors] = useState<string[]>([]);
-  const [filters, setFilters] = useState<FilterState>({
-    make: '',
-    model: '',
-    yearMin: '',
-    yearMax: '',
-    maxKilometers: '',
-    priceMax: '',
-    type: '',
-    color: '',
-    hpMin: '',
-    hpMax: '',
-    fuelType: '',
-    gearbox: '',
-  });
+  
+  const filters: FilterState = React.useMemo(() => ({
+    make: searchParams.get('make') || '',
+    model: searchParams.get('model') || '',
+    yearMin: searchParams.get('yearMin') || '',
+    yearMax: searchParams.get('yearMax') || '',
+    maxKilometers: searchParams.get('maxKilometers') || '',
+    priceMax: searchParams.get('priceMax') || '',
+    type: searchParams.get('type') || '',
+    color: searchParams.get('color') || '',
+    hpMin: searchParams.get('hpMin') || '',
+    hpMax: searchParams.get('hpMax') || '',
+    fuelType: searchParams.get('fuelType') || '',
+    gearbox: searchParams.get('gearbox') || '',
+  }), [searchParams]);
+
+  const currentPage = Number(searchParams.get('page') || '1');
+  const sortOption = searchParams.get('sort') || 'price-asc';
+
+  const setFilters = (updater: React.SetStateAction<FilterState>) => {
+    const newFilters = typeof updater === 'function' ? updater(filters) : updater;
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value as string);
+      } else {
+        params.delete(key);
+      }
+    });
+    params.delete('page');
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const setSortOption = (newSort: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('sort', newSort);
+    params.delete('page');
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const setCurrentPage = (pageUpdater: React.SetStateAction<number>) => {
+    const newPage = typeof pageUpdater === 'function' ? pageUpdater(currentPage) : pageUpdater;
+    const params = new URLSearchParams(searchParams.toString());
+    if (newPage > 1) {
+      params.set('page', String(newPage));
+    } else {
+      params.delete('page');
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
 
@@ -94,11 +133,10 @@ const HomePage: React.FC = () => {
     };
 
   useEffect(() => {
-
+    
     const fetchCars = async () => {
       try {
         const params = new URLSearchParams();
-
         if (filters.make) params.append('make', filters.make);
         if (filters.model) params.append('model', filters.model);
         if (filters.yearMin) params.append('minYear', filters.yearMin);
@@ -124,7 +162,6 @@ const HomePage: React.FC = () => {
         );
 
         if (!response.ok) {
-          // optional: log backend error body for easier debugging
           const text = await response.text().catch(() => "");
           throw new Error(`Network response was not ok (${response.status}). ${text}`);
         }
@@ -139,7 +176,6 @@ const HomePage: React.FC = () => {
         const frontendCars = page.content.map(mapBackendCarToFrontend);
         setCars(frontendCars);
 
-        // If you have pagination UI, you probably want these too:
         setTotalPages(page.totalPages);
         setTotalItems(page.totalElements);
       } catch (error) {
@@ -150,11 +186,6 @@ const HomePage: React.FC = () => {
 
     fetchCars();
   }, [filters, currentPage, sortOption]);
-
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filters]);
 
 
 
