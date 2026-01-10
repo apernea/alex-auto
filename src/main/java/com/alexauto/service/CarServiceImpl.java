@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import com.alexauto.dto.CarSearchCriteria;
+import com.alexauto.dto.CarResponseDTO;
 import com.alexauto.model.Car;
 import com.alexauto.utils.CarDataLoader;
 import com.alexauto.exception.ResourceNotFoundException;
@@ -32,28 +33,31 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getCars() {
+    public List<CarResponseDTO> getCars() {
         List<Car> cars = CarDataLoader.getCars();
-        return cars != null ? cars : List.of();
+        return (cars != null ? cars : List.<Car>of()).stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
     @Override
-    public Car getCarById(Long id) {
+    public CarResponseDTO getCarById(Long id) {
         return CarDataLoader.getCars().stream()
             .filter(c -> c.getId().equals(id))
             .findFirst()
+            .map(this::convertToDTO)
             .orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
     }
 
     @Override
-    public Car addCar(Car car) {
+    public CarResponseDTO addCar(Car car) {
         car.setId(idCounter.incrementAndGet());
         CarDataLoader.getCars().add(car);
-        return car;
+        return convertToDTO(car);
     }
 
     @Override
-    public Car updateCar(Long id, Car car) {
+    public CarResponseDTO updateCar(Long id, Car car) {
         if (car == null) {
             throw new IllegalArgumentException("car must not be null");
         }
@@ -71,7 +75,7 @@ public class CarServiceImpl implements CarService {
                 synchronized (cars) {
                     cars.set(i, car);
                 }
-                return car;
+                return convertToDTO(car);
             }
         }
 
@@ -79,8 +83,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car deleteCar(Long id) {
-        Car existingCar = getCarById(id); // throws if not found
+    public CarResponseDTO deleteCar(Long id) {
+        CarResponseDTO existingCar = getCarById(id); // throws if not found
         List<Car> cars = CarDataLoader.getCars();
         if (cars != null) {
             synchronized (cars) {
@@ -99,14 +103,15 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getCarsByType(String type) {
+    public List<CarResponseDTO> getCarsByType(String type) {
         return CarDataLoader.getCars().stream()
                 .filter(car -> car.getType().equals(type))
+                .map(this::convertToDTO)
                 .toList();
     }
 
     @Override
-    public Page<Car> searchCars(CarSearchCriteria criteria, Pageable pageable) {
+    public Page<CarResponseDTO> searchCars(CarSearchCriteria criteria, Pageable pageable) {
         List<Car> allCars = CarDataLoader.getCars();
 
         List<Car> filteredCars = allCars.stream()
@@ -169,9 +174,11 @@ public class CarServiceImpl implements CarService {
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), filteredCars.size());
 
-        List<Car> pageContent = List.of(); 
+        List<CarResponseDTO> pageContent = List.of(); 
         if (start <= end) {
-            pageContent = filteredCars.subList(start, end);
+            pageContent = filteredCars.subList(start, end).stream()
+                    .map(this::convertToDTO)
+                    .toList();
         }
 
         return new PageImpl<>(pageContent, pageable, filteredCars.size());
@@ -185,4 +192,23 @@ public class CarServiceImpl implements CarService {
                 .toList();
     }    
 
+    private CarResponseDTO convertToDTO(Car car) {
+        if (car == null) return null;
+        CarResponseDTO dto = new CarResponseDTO();
+        dto.setId(car.getId());
+        dto.setMake(car.getMake());
+        dto.setModel(car.getModel());
+        dto.setYear(car.getYear());
+        dto.setColor(car.getColor());
+        dto.setPrice(car.getPrice());
+        dto.setDescription(car.getDescription());
+        dto.setKilometers(car.getKilometers());
+        dto.setImageUrl(car.getImageUrl());
+        dto.setType(car.getType());
+        dto.setHorsepower(car.getHorsepower());
+        dto.setFuelType(car.getFuelType());
+        dto.setTransmission(car.getTransmission());
+        dto.setEngineSize(car.getEngineSize());
+        return dto;
+    }
 }

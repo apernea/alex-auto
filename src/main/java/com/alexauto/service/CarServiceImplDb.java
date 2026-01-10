@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.alexauto.dto.CarSearchCriteria;
+import com.alexauto.dto.CarResponseDTO;
 import com.alexauto.exception.ResourceNotFoundException;
 import com.alexauto.model.Car;
 import com.alexauto.repository.CarRepo;
@@ -24,8 +25,10 @@ public class CarServiceImplDb implements CarService {
     }
 
     @Override
-    public List<Car> getCars() {
-        return carRepository.findAll();
+    public List<CarResponseDTO> getCars() {
+        return carRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
     @Override
@@ -39,17 +42,19 @@ public class CarServiceImplDb implements CarService {
     }
 
     @Override
-    public Car getCarById(Long id) {
-        return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
+    public CarResponseDTO getCarById(Long id) {
+        return carRepository.findById(id)
+                .map(this::convertToDTO)
+                .orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
     }
 
     @Override
-    public Car addCar(Car car) {
-        return carRepository.save(car);
+    public CarResponseDTO addCar(Car car) {
+        return convertToDTO(carRepository.save(car));
     }
 
     @Override
-    public Car updateCar(Long id, Car car) {
+    public CarResponseDTO updateCar(Long id, Car car) {
         if (car == null) {
             throw new IllegalArgumentException("car must not be null");
         }
@@ -59,28 +64,49 @@ public class CarServiceImplDb implements CarService {
         }
 
         car.setId(id);
-        return carRepository.save(car);
+        return convertToDTO(carRepository.save(car));
     }
 
 
     @Override
-    public Car deleteCar(Long id) {
+    public CarResponseDTO deleteCar(Long id) {
         Car existing = carRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Car not found: " + id));
         carRepository.deleteById(id);
-        return existing;
+        return convertToDTO(existing);
     }
 
     @Override
-    public List<Car> getCarsByType(String type) {
-        return carRepository.findByType(type);
+    public List<CarResponseDTO> getCarsByType(String type) {
+        return carRepository.findByType(type).stream()
+                .map(this::convertToDTO)
+                .toList();
     }
     
     @Override
-    public Page<Car> searchCars(CarSearchCriteria criteria, Pageable pageable) {
+    public Page<CarResponseDTO> searchCars(CarSearchCriteria criteria, Pageable pageable) {
         Specification<Car> spec = CarSpecification.findByCriteria(criteria);
 
-        return carRepository.findAll(spec, pageable);
+        return carRepository.findAll(spec, pageable).map(this::convertToDTO);
     }
 
+    private CarResponseDTO convertToDTO(Car car) {
+        if (car == null) return null;
+        CarResponseDTO dto = new CarResponseDTO();
+        dto.setId(car.getId());
+        dto.setMake(car.getMake());
+        dto.setModel(car.getModel());
+        dto.setYear(car.getYear());
+        dto.setColor(car.getColor());
+        dto.setPrice(car.getPrice());
+        dto.setDescription(car.getDescription());
+        dto.setKilometers(car.getKilometers());
+        dto.setImageUrl(car.getImageUrl());
+        dto.setType(car.getType());
+        dto.setHorsepower(car.getHorsepower());
+        dto.setFuelType(car.getFuelType());
+        dto.setTransmission(car.getTransmission());
+        dto.setEngineSize(car.getEngineSize());
+        return dto;
+    }
 }

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alexauto.model.Car;
 import com.alexauto.service.CarService;
+import com.alexauto.dto.CarResponseDTO;
 import com.alexauto.dto.CarSearchCriteria;
 
 import org.springframework.data.domain.Pageable;
@@ -36,14 +37,14 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable Long id){
-        Car car = carService.getCarById(id);
+    public ResponseEntity<CarResponseDTO> getCarById(@PathVariable Long id){
+        CarResponseDTO car = carService.getCarById(id);
         return ResponseEntity.ok(car);
     }
 
     @GetMapping
-    public ResponseEntity<List<Car>> getAllCars() {
-        List<Car> allCars = carService.getCars();
+    public ResponseEntity<List<CarResponseDTO>> getAllCars() {
+        List<CarResponseDTO> allCars = carService.getCars();
         return ResponseEntity.ok(allCars);
     }
 
@@ -60,20 +61,20 @@ public class CarController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<Car>> searchCars(CarSearchCriteria criteria, Pageable pageable) {
-        Page<Car> carsPage = carService.searchCars(criteria, pageable);
+    public ResponseEntity<Page<CarResponseDTO>> searchCars(CarSearchCriteria criteria, Pageable pageable) {
+        Page<CarResponseDTO> carsPage = carService.searchCars(criteria, pageable);
         return ResponseEntity.ok(carsPage);
     }
 
     @PostMapping
-    public ResponseEntity<Car> addCar(@Valid @RequestBody Car car) {
-        Car createdCar = carService.addCar(car);
+    public ResponseEntity<CarResponseDTO> addCar(@Valid @RequestBody Car car) {
+        CarResponseDTO createdCar = carService.addCar(car);
         return new ResponseEntity<>(createdCar, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable Long id, @Valid @RequestBody Car car) {
-        Car updatedCar = carService.updateCar(id, car);
+    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Long id, @Valid @RequestBody Car car) {
+        CarResponseDTO updatedCar = carService.updateCar(id, car);
         return ResponseEntity.ok(updatedCar);
     }
 

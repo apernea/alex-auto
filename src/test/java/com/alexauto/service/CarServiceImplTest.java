@@ -1,6 +1,7 @@
 package com.alexauto.service;
 
 import com.alexauto.dto.CarSearchCriteria;
+import com.alexauto.dto.CarResponseDTO;
 import com.alexauto.model.Car;
 import com.alexauto.utils.CarDataLoader;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ class CarServiceImplTest {
     @DisplayName("getCars() should return the complete list of cars from the data source")
     void getCars_shouldReturnAllCars() {
         // When
-        List<Car> cars = carService.getCars();
+        List<CarResponseDTO> cars = carService.getCars();
 
         // Then
         assertThat(cars)
@@ -50,7 +51,7 @@ class CarServiceImplTest {
         Long carId = 1L;
 
         // When
-        Car foundCar = carService.getCarById(carId);
+        CarResponseDTO foundCar = carService.getCarById(carId);
 
         // Then
         assertThat(foundCar)
@@ -81,7 +82,7 @@ class CarServiceImplTest {
         newCar.setType("Sedan");
 
         // When
-        Car savedCar = carService.addCar(newCar);
+        CarResponseDTO savedCar = carService.addCar(newCar);
 
         // Then
         assertThat(savedCar.getId()).isNotNull();
@@ -92,11 +93,12 @@ class CarServiceImplTest {
     @DisplayName("updateCar() should update an existing car")
     void updateCar_shouldUpdateExistingCar() {
         // Given
-        Car carToUpdate = carService.getCarById(1L);
+        Car carToUpdate = new Car();
+        carToUpdate.setId(1L);
         carToUpdate.setPrice(99999.0);
 
         // When
-        Car updated = carService.updateCar(1L, carToUpdate);
+        CarResponseDTO updated = carService.updateCar(1L, carToUpdate);
 
         // Then
         assertThat(updated).isNotNull();
@@ -118,7 +120,7 @@ class CarServiceImplTest {
     @DisplayName("deleteCar() should remove car and return the removed car when ID exists")
     void deleteCar_shouldRemoveCar_whenIdExists() {
         // When
-        Car removed = carService.deleteCar(1L);
+        CarResponseDTO removed = carService.deleteCar(1L);
 
         // Then
         assertThat(removed).isNotNull();
@@ -155,7 +157,7 @@ class CarServiceImplTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         // When
-        Page<Car> result = carService.searchCars(criteria, pageable);
+        Page<CarResponseDTO> result = carService.searchCars(criteria, pageable);
 
         // Then
         assertThat(result.getContent()).isNotEmpty();
@@ -171,8 +173,8 @@ class CarServiceImplTest {
         Pageable page2 = PageRequest.of(1, 5);
 
         // When
-        Page<Car> result1 = carService.searchCars(criteria, page1);
-        Page<Car> result2 = carService.searchCars(criteria, page2);
+        Page<CarResponseDTO> result1 = carService.searchCars(criteria, page1);
+        Page<CarResponseDTO> result2 = carService.searchCars(criteria, page2);
 
         // Then
         assertThat(result1.getContent()).hasSize(5);

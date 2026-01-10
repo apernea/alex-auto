@@ -1,6 +1,7 @@
 package com.alexauto.service;
 
 import com.alexauto.dto.CarSearchCriteria;
+import com.alexauto.dto.CarResponseDTO;
 import com.alexauto.model.Car;
 import com.alexauto.repository.CarRepo;
 import org.junit.jupiter.api.DisplayName;
@@ -43,7 +44,7 @@ class CarServiceImplDbTest {
         when(carRepository.findAll()).thenReturn(List.of(car));
 
         // When
-        List<Car> result = carService.getCars();
+        List<CarResponseDTO> result = carService.getCars();
 
         // Then
         assertThat(result).hasSize(1);
@@ -60,7 +61,7 @@ class CarServiceImplDbTest {
         when(carRepository.findById(id)).thenReturn(Optional.of(car));
 
         // When
-        Car result = carService.getCarById(id);
+        CarResponseDTO result = carService.getCarById(id);
 
         // Then
         assertThat(result).isNotNull();
@@ -87,10 +88,10 @@ class CarServiceImplDbTest {
         when(carRepository.save(car)).thenReturn(car);
 
         // When
-        Car result = carService.addCar(car);
+        CarResponseDTO result = carService.addCar(car);
 
         // Then
-        assertThat(result).isEqualTo(car);
+        assertThat(result.getId()).isEqualTo(car.getId());
         verify(carRepository).save(car);
     }
 
@@ -105,10 +106,10 @@ class CarServiceImplDbTest {
         when(carRepository.save(car)).thenReturn(car);
 
         // When
-        Car result = carService.updateCar(id, car);
+        CarResponseDTO result = carService.updateCar(id, car);
 
         // Then
-        assertThat(result).isEqualTo(car);
+        assertThat(result.getId()).isEqualTo(id);
         verify(carRepository).save(car);
     }
 
@@ -136,10 +137,10 @@ class CarServiceImplDbTest {
         when(carRepository.findById(id)).thenReturn(Optional.of(car));
 
         // When
-        Car result = carService.deleteCar(id);
+        CarResponseDTO result = carService.deleteCar(id);
 
         // Then
-        assertThat(result).isEqualTo(car);
+        assertThat(result.getId()).isEqualTo(id);
         verify(carRepository).deleteById(id);
     }
 
@@ -169,7 +170,7 @@ class CarServiceImplDbTest {
         when(carRepository.findAll((Specification<Car>) any(Specification.class), eq(pageable))).thenReturn(page);
 
         // When
-        Page<Car> result = carService.searchCars(criteria, pageable);
+        Page<CarResponseDTO> result = carService.searchCars(criteria, pageable);
 
         // Then
         assertThat(result).isNotNull();

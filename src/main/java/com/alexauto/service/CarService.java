@@ -6,16 +6,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
 import com.alexauto.dto.CarSearchCriteria;
+import com.alexauto.dto.CarResponseDTO;
 import com.alexauto.model.Car;
 
 public interface CarService {
-    List<Car> getCars();
+    List<CarResponseDTO> getCars();
     List<String> getAllCarTypes();
     List<String> getAllCarColors();
-    Car getCarById(Long id);
-    Car addCar(Car car);
-        Car updateCar(Long id, Car car);
-        Car deleteCar(Long id);
-    List<Car> getCarsByType(String type);
-    Page<Car> searchCars(CarSearchCriteria criteria, Pageable pageable);
+    CarResponseDTO getCarById(Long id);
+    CarResponseDTO addCar(Car car);
+    CarResponseDTO updateCar(Long id, Car car);
+    CarResponseDTO deleteCar(Long id);
+    List<CarResponseDTO> getCarsByType(String type);
+    Page<CarResponseDTO> searchCars(CarSearchCriteria criteria, Pageable pageable);
 }
